@@ -1,6 +1,7 @@
 package com.example.zain.test;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,17 +37,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String mess = message.getText().toString();
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.putExtra("sms_body", mess);
-                sendIntent.setType("vnd.android-dir/mms-sms");
-                startActivity(sendIntent);
+                Uri uri = Uri.parse("smsto:7205929025");
+                Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+                it.putExtra("sms_body", mess);
+                startActivity(it);
             }
         });
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "CALL", Toast.LENGTH_SHORT).show();
+                String num1 = number.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+num1));
+                startActivity(intent);
             }
         });
     }
